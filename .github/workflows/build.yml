@@ -41,7 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p libs
-          curl -fL --retry 3 "https://thunderstore.io/package/download/nickklmao/MenuLib/2.6.0/" -o /tmp/MenuLib.zip
+          curl -fL --retry 3 "https://thunderstore.io/package/download/REPOModding/MenuLib/2.6.0/" -o /tmp/MenuLib.zip
           unzip -Z1 /tmp/MenuLib.zip
           entry="$(unzip -Z1 /tmp/MenuLib.zip | grep -Ei 'menulib.*[.]dll' | head -n 1)"
           test -n "$entry"
