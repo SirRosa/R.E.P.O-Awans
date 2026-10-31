@@ -1,0 +1,11 @@
+{
+  "name": "Awans",
+  "version_number": "1.2.2",
+  "website_url": "https://github.com/SirRosa/R.E.P.O-Awans",
+  "description": "Leveling fork of Improve with F5 menu access for R.E.P.O. 0.5.0 (test).",
+  "dependencies": [
+    "BepInEx-BepInExPack-5.4.2305",
+    "nickklmao-MenuLib-2.6.0",
+    "headclef-Relay-1.0.0"
+  ]
+}

@@ -1,0 +1,51 @@
+name: Build R.E.P.O Awans
+on:
+  push:
+    branches: [main, "test/**"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Check hotkey and original save GUID
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          m=Path("ImproveMenu.cs").read_text()
+          p=Path("Improve.cs").read_text()
+          assert "MenuAPI.AddElementToMainMenu(parent => _mainMenuRoot = parent)" in m
+          assert "TryOpenFromMainMenu()" in m
+          assert "AddElementToEscapeMenu" not in m
+          assert "AddElementToLobbyMenu" not in m
+          assert "AddImproveButton" not in m
+          assert "KeyCode.F5" in p
+          assert 'PluginGuid = "headclef.Improve"' in p
+          PY
+      - name: Download official Relay 1.0.0 for compile-only reference
+        run: |
+          set -euo pipefail
+          mkdir -p libs
+          curl -fL --retry 3 "https://thunderstore.io/package/download/headclef/Relay/1.0.0/" -o /tmp/Relay.zip
+          entry="$(unzip -Z1 /tmp/Relay.zip | grep -E '(^|/)Relay[.]dll$' | head -n 1)"
+          test -n "$entry"
+          unzip -p /tmp/Relay.zip "$entry" > libs/Relay.dll
+          test -s libs/Relay.dll
+      - name: Build
+        run: dotnet build Improve.csproj -c Release -p:ContinuousIntegrationBuild=true
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp bin/Release/netstandard2.1/Improve.dll manifest.json LICENSE icon.png README.md dist/
+          cd dist
+          zip -9 ../R.E.P.O-Awans-1.2.2-test.zip Improve.dll manifest.json LICENSE icon.png README.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: R.E.P.O-Awans-test
+          path: R.E.P.O-Awans-1.2.2-test.zip
