@@ -43,23 +43,7 @@ jobs:
           mkdir -p libs
           curl -fL --retry 3 "https://thunderstore.io/package/download/nickklmao/MenuLib/2.6.0/" -o /tmp/MenuLib.zip
           unzip -Z1 /tmp/MenuLib.zip
-          entry="$(unzip -Z1 /tmp/MenuLib.zip | grep -Ei '(^|/)[^/]*menulib[^/]*[.]dll
-          test -n "$entry"
-          unzip -p /tmp/MenuLib.zip "$entry" > libs/MenuLib.dll
-          test -s libs/MenuLib.dll
-      - name: Build
-        run: dotnet build Improve.csproj -c Release -p:ContinuousIntegrationBuild=true
-      - name: Package
-        run: |
-          mkdir -p dist
-          cp bin/Release/netstandard2.1/Improve.dll manifest.json LICENSE icon.png README.md dist/
-          cd dist
-          zip -9 ../R.E.P.O-Awans-1.2.2-test.zip Improve.dll manifest.json LICENSE icon.png README.md
-      - uses: actions/upload-artifact@v4
-        with:
-          name: R.E.P.O-Awans-test
-          path: R.E.P.O-Awans-1.2.2-test.zip
- | head -n 1)"
+          entry="$(unzip -Z1 /tmp/MenuLib.zip | grep -Ei 'menulib.*[.]dll' | head -n 1)"
           test -n "$entry"
           unzip -p /tmp/MenuLib.zip "$entry" > libs/MenuLib.dll
           test -s libs/MenuLib.dll
