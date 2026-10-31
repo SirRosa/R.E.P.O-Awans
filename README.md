@@ -2,7 +2,7 @@
 
 Oparty na [headclef/Repo-Improve](https://github.com/headclef/Repo-Improve/tree/development) (licencja MIT).
 
-**Zmiana:** otwieranie okna levelowania klawiszem **F5** w **menu głównym** R.E.P.O. 0.5.0. Usunięto dodawane do menu przyciski, których pozycjonowanie kolidowało z nowym układem. Korzysta z MenuLib 2.6.0.
+**Zmiana:** otwieranie okna levelowania klawiszem **F5** w **menu głównym** R.E.P.O. 0.5.0. Usunięto dodawane do menu przyciski, których pozycjonowanie kolidowało z nowym układem. Korzysta z REPOModding MenuLib 2.6.0.
 
 Klawisz można skonfigurować w `BepInEx/config/headclef.Improve.cfg` — sekcja `[Interface]`.
 
